@@ -23,42 +23,42 @@ const map = {};
 
   // 基本情報の付与
   JSON.parse(simplify(fs.readFileSync(process.argv[2], "UTF-8"))).results.bindings.forEach(e => {
-    const code = e.id.value.replace("http://data.e-stat.go.jp/lod/sac/C", "").split("-")[0];
+    const code = e.ID.value.replace("http://data.e-stat.go.jp/lod/sac/C", "").split("-")[0];
     const f = {
-      id: e.id.value,
-      label: e.label.value,
+      id: e.ID.value,
+      label: e.LABEL.value,
       parent: [],
       children: [],
       next: [],
       prev: [],
-      visible: !!(e.label.value.match(/[都道府県市区町村]$/)),
+      visible: !!(e.LABEL.value.match(/[都道府県市区町村]$/)),
       code: code,
-      key: code + e.label.value
+      key: code + e.LABEL.value
     };
     map[f.id] = f;
   });
 
   // 上下関係の接続
   JSON.parse(simplify(fs.readFileSync(process.argv[3], "UTF-8"))).results.bindings.forEach(e => {
-    const child = map[e.id.value];
-    const parent = map[e.parent.value];
+    const child = map[e.ID.value];
+    const parent = map[e.PARENT.value];
     if (child && parent) {
       if (child.parent.indexOf(parent) === -1) child.parent.push(parent);
       if (parent.children.indexOf(child) === -1) parent.children.push(child);
     } else {
-      console.error("Invalid parent/child", e.id.value, e.parent.value);
+      console.error(`Invalid ${[!parent && 'parent', !child && 'child'].filter(v => v).join('/')}`, e.PARENT.value, e.ID.value);
     }
   });
 
   // 前後関係の接続
   JSON.parse(simplify(fs.readFileSync(process.argv[4], "UTF-8"))).results.bindings.forEach(e => {
-    const prev = map[e.id.value];
-    const next = map[e.next.value];
+    const prev = map[e.ID.value];
+    const next = map[e.NEXT.value];
     if (next && prev) {
       if (prev.next.indexOf(next) === -1) prev.next.push(next);
       if (next.prev.indexOf(prev) === -1) next.prev.push(prev);
     } else {
-      console.error("Invalid prev/next", e.id.value, e.next.value);
+      console.error(`Invalid ${[!prev && 'prev', !next && 'next'].filter(v => v).join('/')}`, e.ID.value, e.NEXT.value);
     }
   });
 
