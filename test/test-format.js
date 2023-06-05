@@ -177,8 +177,8 @@ describe('imi-enrichment-address#format', function() {
                 "@type": "参照型",
                 "種別": "継承先市区町村コード",
                 "参照先": [
-                  "http://data.e-stat.go.jp/lod/sac/C19201",
-                  "http://data.e-stat.go.jp/lod/sac/C19430"
+                  "http://data.e-stat.go.jp/lod/sac/C19430",
+                  "http://data.e-stat.go.jp/lod/sac/C19201"
                 ]
               }
             },
