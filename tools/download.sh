@@ -24,7 +24,7 @@ for no in `seq -w 1000 1000 47000` ; do
   if [ ! -e "${zip}" ] ; then
     curl $url > ${zip}
   fi
-  unzip -p ${zip} '*.[cC][sS][vV]' | iconv -f MS932 -t utf8 | \
+  unzip -p ${zip} '*.[cC][sS][vV]' | iconv -f CP932 -t utf8 | \
   sed 's/"白糠町"/"白糠郡白糠町"/' | \
   sed 's/"07023","郡山市"/"07203","郡山市"/' | \
   sed 's/"431050098005","弓削六丁目"/"431050098006","弓削六丁目"/' | \
