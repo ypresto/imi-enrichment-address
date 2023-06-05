@@ -48,11 +48,12 @@ done
 
 if [ ! -e "${SAC_LABEL}" ] ; then
 
-curl -v -H 'Accept: application/sparql-results+json' --data-urlencode 'query@-' http://data.e-stat.go.jp/lod/sparql/alldata/query > ${SAC_LABEL} << EOS
+node ./tools/download-sparql.js > ${SAC_LABEL} << EOS
 PREFIX sacs: <http://data.e-stat.go.jp/lod/terms/sacs#>
 PREFIX ic: <http://imi.go.jp/ns/core/rdf#>
 
 select ?id ?label ?valid where {?id a sacs:StandardAreaCode ; ic:表記 ?label. optional {?id dcterms:valid ?valid.}}
+order by ?id ?parent
 
 EOS
 
@@ -60,11 +61,11 @@ fi
 
 if [ ! -e "${SAC_PARENT}" ] ; then
 
-curl -v -H 'Accept: application/sparql-results+json' --data-urlencode 'query@-' http://data.e-stat.go.jp/lod/sparql/alldata/query > ${SAC_PARENT} << EOS
+node ./tools/download-sparql.js > ${SAC_PARENT} << EOS
 PREFIX sacs: <http://data.e-stat.go.jp/lod/terms/sacs#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
-select ?id ?parent where {?id a sacs:StandardAreaCode ; dcterms:isPartOf ?parent.}
+select ?id ?parent where {?id a sacs:StandardAreaCode ; dcterms:isPartOf ?parent.} order by ?id ?parent
 
 EOS
 
@@ -72,14 +73,15 @@ fi
 
 if [ ! -e "${SAC_CHANGE}" ] ; then
 
-curl -v -H 'Accept: application/sparql-results+json' --data-urlencode 'query@-' http://data.e-stat.go.jp/lod/sparql/alldata/query > ${SAC_CHANGE} << EOS
+node ./tools/download-sparql.js > ${SAC_CHANGE} << EOS
 PREFIX sacs: <http://data.e-stat.go.jp/lod/terms/sacs#>
 
 select ?id ?next where {
   {?id a sacs:StandardAreaCode; sacs:succeedingCode ?next.}
   union
   {?id a sacs:StandardAreaCode; sacs:succeedingMunicipality ?next.}
-}
+} order by ?id ?parent
+
 EOS
 
 fi
