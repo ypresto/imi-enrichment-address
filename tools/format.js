@@ -2,8 +2,11 @@ const readline = require('readline');
 const fs = require('fs');
 
 const levelup = require('levelup');
-const leveldown = require('leveldown');
-const db = levelup(leveldown(__dirname + "/../db"));
+const rocksdb = require('rocksdb');
+
+fs.rmSync(__dirname + "/../db", { recursive: true, force: true });
+
+const db = levelup(rocksdb(__dirname + "/../db"));
 const promises = [];
 
 const chome = [

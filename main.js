@@ -5,7 +5,7 @@ const bangou = require("./lib/bangou");
 const util = require("./lib/util");
 
 const levelup = require('levelup');
-const leveldown = require('leveldown');
+const rocksdb = require('rocksdb');
 
 // 住所から緯度経度付き場所型を返す
 // 住所文字列またはパラメータオブジェクトを受け付けます
@@ -42,7 +42,7 @@ module.exports = function(src) {
     return Promise.resolve(dst);
   }
 
-  const db = levelup(leveldown(__dirname + "/db"));
+  const db = levelup(rocksdb(__dirname + "/db"), { readOnly: true });
   const promises = targets.map(target => {
     const address = target["住所"] || target;
     const response = find(address["表記"]);

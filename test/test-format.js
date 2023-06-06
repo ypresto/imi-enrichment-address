@@ -1,13 +1,13 @@
 const expect = require('chai').expect;
 const levelup = require('levelup');
-const leveldown = require('leveldown');
+const rocksdb = require('rocksdb');
 
 describe('imi-enrichment-address#format', function() {
 
   let db;
 
   before(() => {
-    db = levelup(leveldown(__dirname + "/../db"));
+    db = levelup(rocksdb(__dirname + "/../db"), { readOnly: true });
   });
 
   after(() => {
