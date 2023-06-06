@@ -64,10 +64,6 @@ describe('imi-enrichment-address#bangou', function() {
         "番地": "103",
         "号": "45"
       });
-      expect(bangou("103の45")).deep.equal({
-        "番地": "103",
-        "号": "45"
-      });
       expect(bangou("103番45号")).deep.equal({
         "番地": "103",
         "号": "45"
@@ -105,5 +101,15 @@ describe('imi-enrichment-address#bangou', function() {
         "号": "45"
       });
     });
+    it('「の」', () => {
+      expect(bangou("103の45")).deep.equal({
+        "番地": "103",
+        "号": "45"
+      });
+      expect(bangou("103番の45号")).deep.equal({
+        "番地": "103",
+        "号": "45"
+      });
+    })
   });
 });
