@@ -1,5 +1,13 @@
 # imi-enrichment-address
 
+<https://github.com/IMI-Tool-Project/imi-enrichment-address> で公開されていた、住所の正規化を行うライブラリのforkです。
+
+<https://imi-enrichment-address.vercel.app> で実際にお試しいただけます。
+
+`npm i https://github.com/ypresto/imi-enrichment-address` で、ライブラリとしてインストールできます。
+
+## 利用例
+
 入力となる JSON-LD に含まれる `住所>表記 をもつ 場所型` または `表記をもつ住所型` に対して各種のプロパティを補完して返します。
 
 入力が `住所>表記 をもつ 場所型` の場合には地理座標と住所型の各プロパティが補完されます。
