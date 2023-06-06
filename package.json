@@ -11,6 +11,7 @@
     "format": "gunzip -c cache/isj.txt.gz | node tools/format.js cache/sac_label.json cache/sac_parent.json cache/sac_change.json",
     "tree": "gunzip -c cache/isj.txt.gz  | node tools/tree.js cache/sac_label.json cache/sac_parent.json cache/sac_change.json > cache/tree.json",
     "build": "npm run download-13.0b && npm run tree && npm run format",
+    "prepare": "npm run build",
     "start": "node bin/server.js 8080"
   },
   "bin": "bin/cli.js",
