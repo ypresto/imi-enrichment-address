@@ -1,6 +1,6 @@
 {
   "name": "imi-enrichment-address",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "IMI 住所型正規化パッケージ",
   "main": "main.js",
   "scripts": {
