@@ -1,6 +1,6 @@
 {
   "name": "imi-enrichment-address",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "IMI 住所型正規化パッケージ",
   "main": "main.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "download-13.0b": "bash tools/download.sh 13.0b",
     "format": "gzcat cache/isj.txt.gz | node tools/format.js cache/sac_label.json cache/sac_parent.json cache/sac_change.json",
     "tree": "gzcat cache/isj.txt.gz  | node tools/tree.js cache/sac_label.json cache/sac_parent.json cache/sac_change.json > cache/tree.json",
+    "build": "npm run download-13.0b && npm run tree && npm run format",
     "start": "node bin/server.js 8080"
   },
   "bin": "bin/cli.js",
@@ -32,6 +33,7 @@
   "dependencies": {
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.1.0",
+    "express": "^4.18.2",
     "leveldown": "^5.4.1",
     "levelup": "^4.3.2"
   },

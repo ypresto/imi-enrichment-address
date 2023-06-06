@@ -55,7 +55,7 @@
 
     <h1>使用方法</h1>
 
-    <p>現在表示されている URL に <code>POST</code> メソッドを使って住所文字列 または JSON を送信すると変換結果の JSON が出力されます。</p>
+    <p>(現在表示されている URL)/api に <code>POST</code> メソッドを使って住所文字列 または JSON を送信すると変換結果の JSON が出力されます。</p>
 
     <h2>curl</h2>
     <p>住所文字列を変換する場合には <code>Content-Type: text/plain</code> を指定して <code>POST</code> します</p>
@@ -138,7 +138,7 @@ fetch("__ENDPOINT__", {
     }
 
     function send(contentType, body) {
-      fetch(location.href, {
+      fetch(new URL('/api', location.href).toString(), {
         method: "POST",
         headers: {
           "Content-Type": contentType
@@ -148,11 +148,13 @@ fetch("__ENDPOINT__", {
         return response.ok ? response.json() : response.text();
       }).then(function(obj) {
         $("result").textContent = typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2);
+      }).catch(function(obj) {
+        $("result").textContent = 'エラー'
       });
     }
 
     Array.from(document.getElementsByTagName("pre")).forEach(function(e) {
-      e.textContent = e.textContent.replace("__ENDPOINT__", location.href);
+      e.textContent = e.textContent.replace("__ENDPOINT__", new URL('/api', location.href).toString());
     });
 
     $("textButton").addEventListener("click", function() {

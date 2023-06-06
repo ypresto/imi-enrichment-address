@@ -8,6 +8,7 @@ const levelup = require('levelup');
 const leveldown = require('leveldown');
 
 // 住所から緯度経度付き場所型を返す
+// 住所文字列またはパラメータオブジェクトを受け付けます
 module.exports = function(src) {
 
   const dst = typeof src === 'string' ? {
@@ -17,6 +18,7 @@ module.exports = function(src) {
       "@type": "住所型",
       "表記": src
     }
+    // clone
   } : JSON.parse(JSON.stringify(src));
 
   const targets = [];

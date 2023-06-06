@@ -185,7 +185,7 @@ imi-enrichment-address-server is running on port 8080
 WebAPI は POST された JSON または テキストを入力として JSON を返します。
 
 ```
-$ curl -X POST -H 'Content-Type: application/json' -d '{"@type":"住所型","表記":"霞が関2"}' localhost:8080
+$ curl -X POST -H 'Content-Type: application/json' -d '{"@type":"住所型","表記":"霞が関2"}' localhost:8080/api
 {
   "@type": "住所型",
   "表記": "霞が関2",
@@ -199,7 +199,7 @@ $ curl -X POST -H 'Content-Type: application/json' -d '{"@type":"住所型","表
 ```
 
 ```
-$ curl -X POST -H 'Content-Type: text/plain' -d '霞が関2' localhost:8080
+$ curl -X POST -H 'Content-Type: text/plain' -d '霞が関2' localhost:8080/api
 {
   "@type": "住所型",
   "表記": "霞が関2",
@@ -212,8 +212,8 @@ $ curl -X POST -H 'Content-Type: text/plain' -d '霞が関2' localhost:8080
 }
 ```
 
-- WebAPI の URL に GET メソッドでアクセスした場合には HTML ページが表示され、WebAPI の動作を確認することができます
-- POST,GET 以外のメソッドでアクセスした場合には `405 Method Not Allowed` エラーが返されます
+- / に GET メソッドでアクセスした場合には HTML ページが表示され、WebAPI の動作を確認することができます
+- /api に POST 以外のメソッドでアクセスした場合には `405 Method Not Allowed` エラーが返されます
 - `Content-Type: application/json` ヘッダが設定されている場合は、POST Body を JSON として扱い、JSON に対しての変換結果を返します
 - `Content-Type: application/json` ヘッダが設定されているが POST Body が JSON としてパースできない場合は `400 Bad Request` エラーが返されます
 - `Content-Type: application/json` ヘッダが設定されていない場合は、POST Body を住所文字列として扱い、住所文字列をもとに情報の補完された場所型の JSON を返します
