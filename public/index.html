@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <title>imi-enrichment-address</title>
   <style>
+    body {
+      font-family: sans-serif;
+    }
+
     pre {
       background: black;
       color: white;
@@ -20,6 +24,7 @@
     textarea {
       width: 100%;
       display: block;
+      font-family: sans-serif;
     }
 
     dt {
@@ -44,9 +49,9 @@
     <p><b>変換</b> ボタンを押すとこのブラウザから実際に WebAPI を実行して結果を表示します</p>
     <dl>
       <dt>日付文字列</dt>
-      <dd><input value="東京都千代田区霞が関1-3-1" id="text" style="width:30em;"/> <button id="textButton">変換</button></dd>
+      <dd><input value="東京都港区赤坂１丁目２の３" id="text" style="width:30em;"/> <button id="textButton">変換</button></dd>
       <dt>JSON</dt>
-      <dd><textarea rows="10" id="json">{"@type":"場所型","住所":{"@type":"住所型","表記":"東京都千代田区霞が関1-3-1"}}</textarea> <button id="jsonButton">変換</button></dd>
+      <dd><textarea rows="10" id="json">{"@type":"場所型","住所":{"@type":"住所型","表記":"東京都港区赤坂１丁目２の３"}}</textarea> <button id="jsonButton">変換</button></dd>
       <dt>実行結果</dt>
       <dd>
         <textarea rows="22" id="result">ここに実行結果が表示されます</textarea>
@@ -60,43 +65,44 @@
     <h2>curl</h2>
     <p>住所文字列を変換する場合には <code>Content-Type: text/plain</code> を指定して <code>POST</code> します</p>
     <pre>
-$ curl -X POST -H 'Content-Type: text/plain' -d '東京都千代田区霞が関1-3-1' __ENDPOINT__
+$ curl -X POST -H 'Content-Type: text/plain' -d '東京都港区赤坂１丁目２の３' __ENDPOINT__
 {
+  "@context": "https://imi.go.jp/ns/core/context.jsonld",
   "@type": "場所型",
   "住所": {
     "@type": "住所型",
-    "表記": "東京都千代田区霞が関1-3-1",
+    "表記": "東京都港区赤坂１丁目２の３",
     "都道府県": "東京都",
     "都道府県コード": "http://data.e-stat.go.jp/lod/sac/C13000",
-    "市区町村": "千代田区",
-    "市区町村コード": "http://data.e-stat.go.jp/lod/sac/C13101",
-    "町名": "霞が関",
+    "市区町村": "港区",
+    "市区町村コード": "http://data.e-stat.go.jp/lod/sac/C13103",
+    "町名": "赤坂",
     "丁目": "1",
-    "番地": "3",
-    "号": "1"
+    "番地": "2",
+    "号": "3"
   },
   "地理座標": {
     "@type": "座標型",
-    "緯度": "35.673944",
-    "経度": "139.752558"
+    "緯度": "35.668589",
+    "経度": "139.742334"
   }
 }
 </pre>
 
     <p>JSON を変換する場合には <code>Content-Type: application/json</code> を指定して <code>POST</code> します</p>
     <pre>
-$ curl -X POST -H 'Content-Type: application/json' -d '{"@type":"住所型","表記":"東京都千代田区霞が関1-3-1"}' __ENDPOINT__
+$ curl -X POST -H 'Content-Type: application/json' -d '{"@type":"住所型","表記":"東京都港区赤坂１丁目２の３"}' __ENDPOINT__
 {
   "@type": "住所型",
-  "表記": "東京都千代田区霞が関1-3-1",
+  "表記": "東京都港区赤坂１丁目２の３",
   "都道府県": "東京都",
   "都道府県コード": "http://data.e-stat.go.jp/lod/sac/C13000",
-  "市区町村": "千代田区",
-  "市区町村コード": "http://data.e-stat.go.jp/lod/sac/C13101",
-  "町名": "霞が関",
+  "市区町村": "港区",
+  "市区町村コード": "http://data.e-stat.go.jp/lod/sac/C13103",
+  "町名": "赤坂",
   "丁目": "1",
-  "番地": "3",
-  "号": "1"
+  "番地": "2",
+  "号": "3"
 }
 </pre>
 
@@ -108,7 +114,7 @@ fetch("__ENDPOINT__", {
   headers: {
     "Content-Type": "text/plain"
   },
-  body: "東京都千代田区霞が関1-3-1"
+  body: "東京都港区赤坂１丁目２の３"
 }).then(function(response) {
   return response.ok ? response.json() : response.text();
 }).then(function(result) {
@@ -124,7 +130,7 @@ fetch("__ENDPOINT__", {
   headers: {
     "Content-Type": "application/json"
   },
-  body: '{"@type":"場所型","住所":{"@type":"住所型","表記":"東京都千代田区霞が関1-3-1"}}'
+  body: '{"@type":"場所型","住所":{"@type":"住所型","表記":"東京都港区赤坂１丁目２の３"}}'
 }).then(function(response) {
   return response.ok ? response.json() : response.text();
 }).then(function(result) {
